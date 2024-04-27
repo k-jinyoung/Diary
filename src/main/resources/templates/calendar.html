@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='utf-8' />
+    <title>Calendar</title>
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js'></script>
+    <style>
+        header {
+            background-color: lightsteelblue;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var calendarEl = document.getElementById('calendar');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                selectable: true,           //날짜 선택이 가능하도록 설정
+                dateClick: function (info) {
+                    window.open('/NewDiary?date=' + info.dateStr, '_self');
+                },
+                events: 'http://localhost:8080/api/diaries',
+                eventClick: function (info) {
+                    window.open(`/NewDiary?id=` + info.event.id, '_self');
+                }
+            });
+            calendar.render();
+        });
+
+    </script>
+</head>
+<body>
+<header>
+    <h1>Jinyoung's Diary</h1>
+</header>
+<div id='calendar'></div>
+</body>
+</html>
